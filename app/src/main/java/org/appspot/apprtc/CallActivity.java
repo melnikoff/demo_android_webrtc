@@ -37,6 +37,8 @@ import org.webrtc.StatsReport;
 import org.webrtc.RendererCommon.ScalingType;
 import org.webrtc.SurfaceViewRenderer;
 
+import java.util.ArrayList;
+
 /**
  * Activity for peer connection call setup, call waiting
  * and call view.
@@ -237,10 +239,17 @@ public class CallActivity extends Activity
     runTimeMs = intent.getIntExtra(EXTRA_RUNTIME, 0);
 
     // Create connection client and connection parameters.
-    appRtcClient = new WebSocketRTCClient(this, new LooperExecutor());
-    roomConnectionParameters = new RoomConnectionParameters(
-        roomUri.toString(), roomId, loopback);
+    String APPRTC = getResources().getStringArray(R.array.serverConnect)[0];
+    String WEBSYNC = getResources().getStringArray(R.array.serverConnect)[1];
 
+    if (APPRTC.equals(roomUri.toString())) {
+      appRtcClient = new WebSocketRTCClient(this, new LooperExecutor());
+    } else if (WEBSYNC.equals(roomUri.toString())) {
+      appRtcClient = new WebSyncRTCClient(this, new LooperExecutor());
+    }
+
+    roomConnectionParameters = new RoomConnectionParameters(
+            roomUri.toString(), roomId, loopback);
     // Send intent arguments to fragments.
     callFragment.setArguments(intent.getExtras());
     hudFragment.setArguments(intent.getExtras());
