@@ -234,6 +234,7 @@ public class WebSocketRTCClient implements AppRTCClient,
         jsonPut(json, "label", candidate.sdpMLineIndex);
         jsonPut(json, "id", candidate.sdpMid);
         jsonPut(json, "candidate", candidate.sdp);
+        Log.e(TAG, candidate.toString());
         if (initiator) {
           // Call initiator sends ice candidates to GAE server.
           if (roomState != ConnectionState.CONNECTED) {

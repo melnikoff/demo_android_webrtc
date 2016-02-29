@@ -109,17 +109,17 @@ public class ConnectActivity extends Activity {
 
     roomEditText = (EditText) findViewById(R.id.room_edittext);
     roomEditText.setOnEditorActionListener(
-      new TextView.OnEditorActionListener() {
-        @Override
-        public boolean onEditorAction(
-            TextView textView, int i, KeyEvent keyEvent) {
-          if (i == EditorInfo.IME_ACTION_DONE) {
-            addRoomButton.performClick();
-            return true;
-          }
-          return false;
-        }
-    });
+            new TextView.OnEditorActionListener() {
+              @Override
+              public boolean onEditorAction(
+                      TextView textView, int i, KeyEvent keyEvent) {
+                if (i == EditorInfo.IME_ACTION_DONE) {
+                  addRoomButton.performClick();
+                  return true;
+                }
+                return false;
+              }
+            });
     roomEditText.requestFocus();
 
     roomListView = (ListView) findViewById(R.id.room_listview);
@@ -134,6 +134,11 @@ public class ConnectActivity extends Activity {
     connectLoopbackButton =
         (ImageButton) findViewById(R.id.connect_loopback_button);
     connectLoopbackButton.setOnClickListener(connectListener);
+
+    String defaultRoomUrl = getString(R.string.pref_select_room_server_url_default);
+    String roomUrl = sharedPref.getString(keyprefRoomServerUrl, defaultRoomUrl);
+
+    connectLoopbackButton.setVisibility(roomUrl.equals(defaultRoomUrl) ? View.VISIBLE : View.GONE);
 
     // If an implicit VIEW intent is launching the app, go directly to that URL.
     final Intent intent = getIntent();

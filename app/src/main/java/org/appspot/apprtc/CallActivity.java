@@ -457,7 +457,7 @@ public class CallActivity extends Activity
       new AlertDialog.Builder(this)
           .setTitle(getText(R.string.channel_error_title))
           .setMessage(errorMessage)
-          .setCancelable(false)
+          .setCancelable(true)
           .setNeutralButton(R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
